@@ -1,16 +1,21 @@
-const express = require ("express");
+const express = require("express");
 const app = express();
-require ("dotenv").config();
-require ("./conn/conn")
-const User = require ("./routes/user");
+require("dotenv").config();
+require("./conn/conn");
 
-app.use ("/api/v1", User);
+const user = require("./routes/user");
 
-app.get ("/", (req, res)=>{
-    res.send("Hello I'm ready ")
-})
+// ✅ Important middlewares
+app.use(express.json()); //parses incoming JSON requests
+//app.use(express.urlencoded({ extended: true })); optional, for form data
 
+// Routes
+app.use("/api/v1", user);
 
-app.listen (process.env.PORT, ()=>{
-    console.log("Server is started");
-})
+app.get("/", (req, res) => {
+  res.send("Hello, I'm ready!");
+});
+
+app.listen(process.env.PORT, () => {
+  console.log("Server is started");
+});
