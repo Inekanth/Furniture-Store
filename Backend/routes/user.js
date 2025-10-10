@@ -90,7 +90,7 @@ router.post("/sign-in", async (req, res) => {
   }
 });
 
-router.get ("/get-user-information", authenticateToken async (res, req){
+router.get ("/get-user-information", authenticateToken, async (res, req) => {
     try {
         const {id} = req.headers,
         const data = await User.findOne(id);
