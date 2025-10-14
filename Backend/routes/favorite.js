@@ -21,7 +21,7 @@ router.put("/add-to-favourite-item", authenticateToken, async(req, res)=>{
     }
 })
 
-router.delete("/remove-item-from-favourite", authenticateToken, async(req, res)=>{
+router.put("/remove-item-from-favourite", authenticateToken, async(req, res)=>{
     try {
 
         const {itemid, id} = req.headers;
@@ -38,6 +38,21 @@ router.delete("/remove-item-from-favourite", authenticateToken, async(req, res)=
         res.status(500).json({ message: "internal server error" });
     }
 })
+
+router.get("/get-favourite-item", authenticateToken, async(req, res)=>{
+    try {
+
+        const {itemid, id} = req.headers;
+        const userData = await User.findById(id).populate("favourites");
+        const favouriteItems = userData.favourites;
+
+        return res.json({status:"Success", data: favouriteItems});
+        
+    } catch (error) {
+        res.status(500).json({ message: "internal server error" });
+    }
+})
+
 
 module.exports = router;
 
