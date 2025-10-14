@@ -92,9 +92,21 @@ router.post("/sign-in", async (req, res) => {
 
 router.get ("/get-user-information", authenticateToken, async (res, req) => {
     try {
-        const {id} = req.headers,
-        const data = await User.findOne(id);
+        const {id} = req.headers;
+        const data = await User.findOne(id).select(`-password`);
         return res.status(200).json(data);
+
+    } catch (error) {
+        res.status(500).json({ message: "internal server error" });
+    }
+})
+
+router.put ("/update-address", authenticateToken, async (res, req) => {
+    try {
+        const {id} = req.headers;
+        const {address} = req.body;
+        await User.findByIdAndUpdate(id, {address: address});
+        return res.status(200).json("Address is updated");
 
     } catch (error) {
         res.status(500).json({ message: "internal server error" });
