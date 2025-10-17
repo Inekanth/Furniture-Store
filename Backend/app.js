@@ -8,6 +8,7 @@ const item = require("./models/item");
 const Item = require("./routes/item");
 const favourite = require("./routes/favorite");
 const Cart = require("./routes/cart")
+const Order = require ("./routes/order")
 
 app.use(express.json()); //parses incoming JSON requests
 
@@ -16,6 +17,7 @@ app.use("/api/v1", user);
 app.use("/api/v1", Item);
 app.use("/api/v1", favourite);
 app.use("/api/v1", Cart);
+app.use("/api/v1", Order);
 
 app.get("/", (req, res) => {
   res.send("Hello, I'm ready!");
